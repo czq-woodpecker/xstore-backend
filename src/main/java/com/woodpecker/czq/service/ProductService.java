@@ -2,6 +2,7 @@ package com.woodpecker.czq.service;
 
 import com.woodpecker.czq.contract.CreateProductRequest;
 import com.woodpecker.czq.domain.entity.Product;
+import com.woodpecker.czq.exception.ServiceException;
 import com.woodpecker.czq.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,9 @@ public class ProductService {
     }
 
     public void createProduct(CreateProductRequest createProductRequest) {
+        if (productRepository.findByName(createProductRequest.getName()).size() > 0) {
+            throw new ServiceException("商品名称已存在，请输入新的商品名称");
+        }
         Product product = new Product();
         product.setName(createProductRequest.getName());
         product.setPrice(createProductRequest.getPrice());
