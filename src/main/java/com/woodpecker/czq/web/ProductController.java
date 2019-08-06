@@ -5,6 +5,9 @@ import com.woodpecker.czq.service.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api")
 public class ProductController {
@@ -16,7 +19,7 @@ public class ProductController {
 
     @PostMapping("/product")
     @ResponseStatus(HttpStatus.CREATED)
-    public void createProduct(@RequestBody CreateProductRequest createProductRequest) {
+    public void createProduct(@RequestBody @Valid CreateProductRequest createProductRequest) {
         productService.createProduct(createProductRequest);
     }
 }
