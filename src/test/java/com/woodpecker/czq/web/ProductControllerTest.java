@@ -2,13 +2,14 @@ package com.woodpecker.czq.web;
 
 import com.woodpecker.czq.contract.CreateProductRequest;
 import com.woodpecker.czq.service.ProductService;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 class ProductControllerTest extends ApiTestBase {
@@ -44,5 +45,24 @@ class ProductControllerTest extends ApiTestBase {
                 .contentType(MediaType.APPLICATION_JSON_UTF8).content(requestJson))
                 .andExpect(status().is(400))
                 .andExpect(content().string("商品名称已存在，请输入新的商品名称"));
+    }
+
+    @Test
+    void should_return_products_when_get_products() throws Exception {
+        CreateProductRequest productRequest1 = new CreateProductRequest("milk", 7.6, "瓶", "images/milk.jpg");
+        CreateProductRequest productRequest2 = new CreateProductRequest("apple", 9.9, "个", "images/apple.jpg");
+        productService.createProduct(productRequest1);
+        productService.createProduct(productRequest2);
+
+        getMockMvc().perform(get("/api/products"))
+                .andExpect(status().is(200))
+                .andExpect(jsonPath("$[0].name", Matchers.is("milk")))
+                .andExpect(jsonPath("$[0].price", Matchers.is(7.6)))
+                .andExpect(jsonPath("$[0].unit", Matchers.is("瓶")))
+                .andExpect(jsonPath("$[0].imageUrl", Matchers.is("images/milk.jpg")))
+                .andExpect(jsonPath("$[1].name", Matchers.is("apple")))
+                .andExpect(jsonPath("$[1].price", Matchers.is(9.9)))
+                .andExpect(jsonPath("$[1].unit", Matchers.is("个")))
+                .andExpect(jsonPath("$[1].imageUrl", Matchers.is("images/apple.jpg")));
     }
 }
