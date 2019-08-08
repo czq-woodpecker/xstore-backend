@@ -1,19 +1,24 @@
 package com.woodpecker.czq.exception;
 
+import com.woodpecker.czq.result.ErrorMessage;
+import com.woodpecker.czq.result.Result;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
 @ControllerAdvice
+@ResponseBody
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
-    public ResponseEntity handleException(Exception exception) {
+    public ResponseEntity<String> handleException(Exception exception) {
         if (exception instanceof BindException) {
             List<ObjectError> errors = ((BindException) exception).getAllErrors();
             FieldError error = (FieldError) errors.get(0);

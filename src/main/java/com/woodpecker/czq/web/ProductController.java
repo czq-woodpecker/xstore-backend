@@ -3,6 +3,7 @@ package com.woodpecker.czq.web;
 import com.woodpecker.czq.contract.CreateProductRequest;
 import com.woodpecker.czq.contract.GetProductResponse;
 import com.woodpecker.czq.domain.entity.Product;
+import com.woodpecker.czq.result.Result;
 import com.woodpecker.czq.service.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -20,14 +21,14 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @PostMapping("/product")
+    @PostMapping("/products")
     @ResponseStatus(HttpStatus.CREATED)
     public void createProduct(@RequestBody @Valid CreateProductRequest createProductRequest) {
         productService.createProduct(createProductRequest);
     }
 
     @GetMapping("/products")
-    public List<GetProductResponse> getProducts() {
-        return productService.getProducts();
+    public Result<List<GetProductResponse>> getProducts() {
+        return Result.success(productService.getProducts());
     }
 }
