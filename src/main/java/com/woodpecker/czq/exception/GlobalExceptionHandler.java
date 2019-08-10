@@ -1,7 +1,5 @@
 package com.woodpecker.czq.exception;
 
-import com.woodpecker.czq.result.ErrorMessage;
-import com.woodpecker.czq.result.Result;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
