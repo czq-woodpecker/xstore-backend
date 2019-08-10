@@ -21,7 +21,7 @@ class ProductControllerTest extends ApiTestBase {
     void should_create_the_product_and_return_201_status_when_submit_valid_request_of_create_product() throws Exception {
         String createProductRequestJson = "{\"name\": \"牛奶\",\"price\": 3.2,\"imageUrl\": \"images/product/mick.jpg\"}";
 
-        getMockMvc().perform(post("/api/product")
+        getMockMvc().perform(post("/api/products")
                 .contentType(MediaType.APPLICATION_JSON_UTF8).content(createProductRequestJson))
                 .andExpect(status().is(201));
     }
@@ -30,7 +30,7 @@ class ProductControllerTest extends ApiTestBase {
     void should_return_400_status_when_submit_invalid_request_of_create_product() throws Exception {
         String invalidRequestJson = "{\"price\": \"abc\", \"unit\": \"瓶\", \"imageUrl\": \"images/milk\"}";
 
-        getMockMvc().perform(post("/api/product")
+        getMockMvc().perform(post("/api/products")
                 .contentType(MediaType.APPLICATION_JSON_UTF8).content(invalidRequestJson))
                 .andExpect(status().is(400));
     }
@@ -41,7 +41,7 @@ class ProductControllerTest extends ApiTestBase {
         productService.createProduct(createProductRequest);
         String requestJson = "{\"name\": \"milk\", \"price\": 6.6, \"unit\": \"瓶\", \"imageUrl\": \"images/milk2.jpg\"}";
 
-        getMockMvc().perform(post("/api/product")
+        getMockMvc().perform(post("/api/products")
                 .contentType(MediaType.APPLICATION_JSON_UTF8).content(requestJson))
                 .andExpect(status().is(400))
                 .andExpect(content().string("商品名称已存在，请输入新的商品名称"));
@@ -64,5 +64,12 @@ class ProductControllerTest extends ApiTestBase {
                 .andExpect(jsonPath("$[1].price", Matchers.is(9.9)))
                 .andExpect(jsonPath("$[1].unit", Matchers.is("个")))
                 .andExpect(jsonPath("$[1].imageUrl", Matchers.is("images/apple.jpg")));
+    }
+
+    @Test
+    void should_return_empty_list_when_get_products_but_do_not_add_any_product() throws Exception {
+        getMockMvc().perform(get("/api/products"))
+                .andExpect(status().is(200))
+                .andExpect(jsonPath("$", Matchers.empty()));
     }
 }
