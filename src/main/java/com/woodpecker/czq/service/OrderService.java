@@ -1,6 +1,7 @@
 package com.woodpecker.czq.service;
 
 import com.woodpecker.czq.contract.AddOrderRequest;
+import com.woodpecker.czq.contract.GetOrderResponse;
 import com.woodpecker.czq.domain.entity.Order;
 import com.woodpecker.czq.domain.entity.Product;
 import com.woodpecker.czq.exception.NotExistException;
@@ -8,7 +9,9 @@ import com.woodpecker.czq.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 
 import javax.naming.directory.NoSuchAttributeException;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
@@ -37,5 +40,19 @@ public class OrderService {
         } else {
             throw new NotExistException("not exist productId: " + addOrderRequest.getProductId());
         }
+    }
+
+    public List<GetOrderResponse> getOrders() {
+        return orderRepository.findAll()
+                .stream()
+                .map(order -> {
+                    return new GetOrderResponse(
+                            order.getId(),
+                            order.getProduct().getName(),
+                            order.getProduct().getPrice(),
+                            order.getProduct().getUnit(),
+                            order.getAmount()
+                    );
+                }).collect(Collectors.toList());
     }
 }
