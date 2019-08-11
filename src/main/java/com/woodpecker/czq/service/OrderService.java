@@ -55,4 +55,12 @@ public class OrderService {
                     );
                 }).collect(Collectors.toList());
     }
+
+    public void deleteOrder(Long orderId) {
+        if (orderId != null && orderRepository.findById(orderId).isPresent()) {
+            orderRepository.deleteById(orderId);
+        } else {
+            throw new NotExistException("not exist orderId: " + orderId);
+        }
+    }
 }

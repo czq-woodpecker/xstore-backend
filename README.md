@@ -12,3 +12,6 @@
 
 1. given nothing, when getOrders, then return 200 status and a empty list.
 2. given add two orders, when getOrders, then return 200 status and a list containing the two orders.
+
+1. given nothing, when deleteOrder by orderId 1, then return 400 status and error message not exist orderId: 1.
+2. given add a order, when deleteOrder by orderId1, then return 200 status.

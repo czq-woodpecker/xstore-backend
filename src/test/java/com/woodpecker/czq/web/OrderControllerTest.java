@@ -10,8 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 class OrderControllerTest extends IntegrationTestBase {
@@ -70,5 +69,21 @@ class OrderControllerTest extends IntegrationTestBase {
                 .andExpect(jsonPath("$[1].productPrice", Matchers.is(999.9)))
                 .andExpect(jsonPath("$[1].productUnit", Matchers.is("台")))
                 .andExpect(jsonPath("$[1].amount", Matchers.is(2)));
+    }
+
+    @Test
+    void should_return_400_status_and_error_message_when_deleteOrder_by_invalid_orderId() throws Exception {
+        getMockMvc().perform(delete("/api/orders/1"))
+                .andExpect(status().is(400))
+                .andExpect(content().string("not exist orderId: 1"));
+    }
+
+    @Test
+    void should_return_200_status_when_deleteOrder_by_valid_orderId() throws Exception {
+        productService.createProduct(new CreateProductRequest("milk", 7.6, "瓶", "images/milk.jpg"));
+        orderService.addOrUpdateOrder(new AddOrderRequest(1L));
+
+        getMockMvc().perform(delete("/api/orders/1"))
+                .andExpect(status().is(200));
     }
 }
