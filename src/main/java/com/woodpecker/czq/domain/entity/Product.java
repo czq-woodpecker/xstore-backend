@@ -1,9 +1,12 @@
 package com.woodpecker.czq.domain.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+@NoArgsConstructor
 @Data
 @Entity(name = "product")
 public class Product {

@@ -1,6 +1,5 @@
 package com.woodpecker.czq.exception;
 
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
@@ -28,8 +27,9 @@ public class GlobalExceptionHandler {
         } else if (exception instanceof ServiceException) {
             return ResponseEntity
                     .status(400)
-                    .body(((ServiceException) exception).getMsg());
+                    .body(((ServiceException) exception).getMessage());
         } else {
+            exception.printStackTrace();
             return ResponseEntity
                     .status(400)
                     .body("服务器异常");

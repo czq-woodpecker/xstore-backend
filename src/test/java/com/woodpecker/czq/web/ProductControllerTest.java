@@ -12,7 +12,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
-class ProductControllerTest extends ApiTestBase {
+class ProductControllerTest extends IntegrationTestBase {
 
     @Autowired
     private ProductService productService;

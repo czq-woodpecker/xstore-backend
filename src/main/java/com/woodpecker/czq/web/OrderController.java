@@ -1,14 +1,15 @@
 package com.woodpecker.czq.web;
 
+import com.woodpecker.czq.contract.AddOrderRequest;
 import com.woodpecker.czq.service.OrderService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin
+@CrossOrigin(origins = "*")
 public class OrderController {
     private OrderService orderService;
 
@@ -17,7 +18,8 @@ public class OrderController {
     }
 
     @PostMapping("/orders")
-    public void addOrder(Long productId) {
-
+    @ResponseStatus(HttpStatus.CREATED)
+    public void addOrUpdateOrder(@RequestBody @Valid AddOrderRequest addOrderRequest) {
+        orderService.addOrUpdateOrder(addOrderRequest);
     }
 }

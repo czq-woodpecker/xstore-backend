@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -36,11 +37,16 @@ public class ProductService {
         ArrayList<GetProductResponse> productResponses = new ArrayList<>();
         for (Product product : products) {
             productResponses.add(new GetProductResponse(
+                    product.getId(),
                     product.getName(),
                     product.getPrice(),
                     product.getUnit(),
                     product.getImageUrl()));
         }
         return productResponses;
+    }
+
+    public Optional<Product> findById(Long productId) {
+        return productRepository.findById(productId);
     }
 }

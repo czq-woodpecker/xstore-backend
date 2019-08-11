@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class GetProductResponse {
+    private Long id;
     private String name;
     private Double price;
     private String unit;

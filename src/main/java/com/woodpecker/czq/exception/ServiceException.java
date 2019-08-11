@@ -2,17 +2,17 @@ package com.woodpecker.czq.exception;
 
 
 public class ServiceException extends RuntimeException{
-    private String msg;
+    private String message;
 
     public ServiceException() {
     }
 
     public ServiceException(String message) {
         super(message);
-        this.msg = message;
+        this.message = message;
     }
 
-    public String getMsg() {
-        return msg;
+    public String getMessage() {
+        return message;
     }
 }

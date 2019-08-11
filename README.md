@@ -6,3 +6,6 @@
 
 1. given added two products, when get products, then return a list containing the two products.
 2. given nothing, when get products, then return a list containing no value.
+
+1. given add product(id:1), when add order with productId 1, then return 201 status.
+2. given nothing, when add order with productId 1, then return 400 status and error message not exist productId: 1.

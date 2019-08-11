@@ -36,12 +36,13 @@ dependencies {
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: '5.4.1'
     testImplementation 'com.h2database:h2'
 
-    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.16'
-
     annotationProcessor 'org.projectlombok:lombok:1.18.2'
     compileOnly 'org.projectlombok:lombok:1.18.2'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.2'
     testCompileOnly 'org.projectlombok:lombok:1.18.2'
+
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.16'
+    compile group: 'org.flywaydb', name: 'flyway-core', version: '5.2.4'
 
 }
 
